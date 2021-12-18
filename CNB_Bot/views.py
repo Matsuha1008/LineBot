@@ -1,4 +1,3 @@
-from re import I
 from django.shortcuts import render, redirect
 from django.http import request, HttpRequest,  HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 
@@ -11,7 +10,6 @@ from linebot.models import *
 from django.conf import settings
 
 from .models.users import User_Info
-from .models.products import Products
 
 from .products import list_all
 
@@ -36,13 +34,27 @@ def callback(request):
             handle_event(body, signature)  
         except InvalidSignatureError:
             return HttpResponseForbidden()
-            print('HttpResponseForbidden')
         except LineBotApiError:
             return HttpResponseBadRequest()
-            print('HttpResponseBadRequest')
         
         return HttpResponse()
-        print('ok')
+
+
+        
+# 建立 user 資料
+def get_or_create_user(user_id):
+    # 先從 user_id 搜尋
+    user = User_Info.objects.filter(user_id=user_id).first()
+    # 若資料庫尚無該 user 資料
+    if not user:
+        profile = line_bot_api.get_profile(user_id)
+        # 建立資料
+        User_Info.objects.create(user_id=user_id,
+                                 name=profile.display_name,
+                                 image_url=profile.picture_url)
+
+    return user
+
 
 
 # 處理 event
@@ -91,7 +103,7 @@ def handle_message(event):
                                     URITemplateAction(
                                         type='uri',
                                         label='開發者日誌',
-                                        uri='https://linecorp.com'),
+                                        uri=' '),
                                     URITemplateAction(
                                         type='uri',
                                         label='Github',
@@ -106,7 +118,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, message)
 
 
-    elif message_text in ['質感選物', '選物', '分類']:
+    elif message_text in ['質感選物', '選物', '商品分類', '分類']:
         message =TemplateSendMessage(
                             alt_text='Buttons template',
                             template=ButtonsTemplate(
@@ -135,38 +147,7 @@ def handle_message(event):
 
 
     # 選單：我的商品
-    elif message_text in ['我的商品', '我的']:
+    elif message_text in ['我的商品', '我的', '商品']:
         message = "購物車功能尚在開發中"
         
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=message))
-
-
-
-    # 測試用關鍵字：掐哩
-    elif message_text in ['掐哩']:
-        message = [
-            ImageSendMessage(
-                original_content_url='https://i.ytimg.com/vi/reg9Xxa7eIs/mqdefault.jpg',
-                preview_image_url='https://i.ytimg.com/vi/reg9Xxa7eIs/mqdefault.jpg'
-            )]
-        
-        line_bot_api.reply_message(event.reply_token, message)
-
-
-
-
-
-# 建立 user 資料
-def get_or_create_user(user_id):
-    # 從 user_id 先搜尋
-    user = User_Info.objects.filter(user_id=user_id).first()
-    # 若尚無資料
-    if not user:
-        profile = line_bot_api.get_profile(user_id)
-        # 建立資料
-        User_Info.objects.create(user_id=user_id,
-                                 name=profile.display_name,
-                                 image_url=profile.picture_url)
-
-
-    return user
