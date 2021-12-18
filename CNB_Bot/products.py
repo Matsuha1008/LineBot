@@ -13,8 +13,8 @@ import os
 
 
 def list_all(text):
-    #將JSON設定為變數content，並以FlexSendMessage()包成Flex Message
-    url = 'https://cnb-linebot.herokuapp.com/'
+    # 將JSON設定為變數content，並以FlexSendMessage()包成Flex Message
+
     if text == '晶礦':
       products = Products.objects.filter(category=1)
     
