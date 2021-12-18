@@ -64,8 +64,7 @@ def list_all(text):
                                         "color": "#405f67",
                                         "action": {"type": "uri",
                                                    "label": "商品詳細",
-                                                   "uri": 'line://oaMessage/{base_id}/?{message}'.format(base_id=settings.BASE_ID,
-                                                                                                message=quote("購買{product}".format(product=product.name)))}}]}}
+                                                   "uri": ' ')))}}]}}
 
       content["contents"].append(bubble)
 
