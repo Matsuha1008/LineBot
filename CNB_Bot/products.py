@@ -1,15 +1,8 @@
-from linebot import LineBotApi, WebhookParser
-from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import *
-
 from urllib.parse import quote
 
 from django.conf import settings
-
-from django.views.static import serve
-from .models.products import Category, Products
-
-import os
+from .models.products import Products
 
 
 def list_all(text):
