@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath CNB_LineBot CNB_LineBot.wsgi
