@@ -86,7 +86,7 @@ def handle_message(event):
     message_text = str(event.message.text).lower()
     message = []
 
-    # 選單：關於
+    # 圖文選單：關於
     if message_text in ['關於', 'about']:
 
         message = [
@@ -117,7 +117,8 @@ def handle_message(event):
         
         line_bot_api.reply_message(event.reply_token, message)
 
-
+        
+    # 圖文選單：質感選物
     elif message_text in ['質感選物', '選物', '商品分類', '分類']:
         message =TemplateSendMessage(
                             alt_text='Buttons template',
@@ -137,7 +138,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, message)
 
 
-    # 商品分類列表
+    # 選擇商品分類
     elif message_text in ['晶礦', '文具']:
         text = message_text
         message.append(list_all(text))
@@ -146,7 +147,7 @@ def handle_message(event):
 
 
 
-    # 選單：我的商品
+    # 圖文選單：我的商品
     elif message_text in ['我的商品', '我的', '商品']:
         message = "購物車功能尚在開發中"
         
