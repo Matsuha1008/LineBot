@@ -31,6 +31,16 @@ LINE_CHANNEL_SECRET = ''
 BASE_ID = ''
 
 
+# LINE_PAY
+LINE_PAY_ID = ''
+LINE_PAY_SECRET = ''
+
+
+# LINE PAY_API（測試用）
+PAY_API_URL = 'https://sandbox-api-pay.line.me/v2/payments/request'
+CONFIRM_API_URL = 'https://sandbox-api-pay.line.me/v2/payments/{}/confirm'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -58,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',# 靜態檔案部屬
 ]
 
 ROOT_URLCONF = 'CNB_LineBot.urls'
@@ -138,20 +147,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # 部屬時必須將所有靜態檔案蒐集到指定目錄
 # manage.py collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-
-# 使用 WhiteNoise 處理靜態檔案
-# 官方文件：http://whitenoise.evans.io/en/stable/
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# 用Session儲存模型物件
-# PickleSerializer
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers' + '.PickleSerializer'
 
 django_heroku.settings(locals())
