@@ -34,8 +34,6 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 def confirm(request):
     transaction_id = request.GET.get('transactionId')
     order = Orders.objects.filter(transaction_id=transaction_id).first()
-    print(order)
-    print(transaction_id)
 
     if order:
         order.is_pay = True # 訂單狀態改為已付款
