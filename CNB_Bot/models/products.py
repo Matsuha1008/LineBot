@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Category(models.Model):
     """
     商品類別
@@ -19,18 +18,15 @@ class Products(models.Model):
     商品資訊
     """
 
-    id = models.CharField(max_length=50, null=False, primary_key=True)
-    name = models.CharField(max_length=255, blank=False, null=False)
+    id = models.CharField(max_length=3, null=False, primary_key=True)
+    name = models.CharField(max_length=50)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
-    price = models.BigIntegerField(blank=False, null=False)
-    description = models.TextField(blank=False, null=False)
-    image_url = models.TextField(blank=False, null=False)
+    price = models.PositiveBigIntegerField()
+    description = models.TextField(blank=True)
+    image_url = models.TextField(blank=False)
     created_time  = models.DateTimeField(auto_now=True)
 
 
-    #oders = models.ForeignKey(Orders, null=True, on_delete=models.SET_NULL)
-
-    # 內嵌選項
     class Meta:
         ordering = ('-id',)
         verbose_name = '商品資訊'
