@@ -23,7 +23,7 @@ class LinePay():
                 **kwargs}
 
     def pay(self, product_name, amount, order_id, product_image_url=None):
-        host = 'cnb-testbot.herokuapp.com'
+        host = ''
         data = {
             'productName': product_name,
             'amount': amount,
