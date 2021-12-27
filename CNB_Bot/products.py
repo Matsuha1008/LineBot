@@ -5,6 +5,7 @@ from django.conf import settings
 from .models.products import Products
 
 
+
 def list_all(text):
     # 將JSON設定為變數content，並以FlexSendMessage()包成Flex Message
 
@@ -56,10 +57,12 @@ def list_all(text):
                                         "style": "primary",
                                         "color": "#405f67",
                                         "action": {"type": "uri",
-                                                   "label": "商品詳細",
-                                                   "uri": ' ')))}}]}}
+                                                   "label": "加入購物車",
+                                                   "uri": 'line://oaMessage/{base_id}/?{message}'.format(base_id=settings.BASE_ID,
+                                                                                                message=quote("我要購買 {product} × （請輸入數量） ".format(product=product.name)))}}]}}
 
       content["contents"].append(bubble)
 
-    message=FlexSendMessage(alt_text='商品列表',contents=content)
+    message = FlexSendMessage(alt_text='商品列表',contents=content)
+    
     return message
