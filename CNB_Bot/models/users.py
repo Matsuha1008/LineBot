@@ -6,14 +6,12 @@ class User_Info(models.Model):
     用戶資訊
     """
 
-    user_id = models.CharField(max_length=255,null=False,default='')
-    name = models.CharField(max_length=255,blank=True,null=False)
-    image_url = models.CharField(max_length=255,null=False)    
+    user_id = models.CharField(max_length=255 , blank=False, default='', primary_key=True)
+    name = models.CharField(max_length=255)
+    image_url = models.CharField(max_length=255)    
     created_time  = models.DateTimeField(auto_now=True)
 
-    #oders = models.ForeignKey(Orders, null=True, on_delete=models.SET_NULL)
 
-    # 內嵌選項
     class Meta:
         ordering = ('-user_id',)
         verbose_name = '用戶資訊'
